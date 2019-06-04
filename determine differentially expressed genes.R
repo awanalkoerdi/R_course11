@@ -55,6 +55,7 @@ differentially_expressed_genes <- function(){
   result_df <- as.data.frame(topTags(fit, n = 100000, p.value = 0.05))
   
   write.csv(res ,"diff_expressed_genes.csv", row.names = TRUE)
+  write.csv(res[,4:5], "gsea_input.csv", row.names = TRUE)
   
 }
 
