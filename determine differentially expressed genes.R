@@ -16,9 +16,9 @@ differentially_expressed_genes <- function(){
   rownames(countMatrix) <- countMatrix[,"Gene"]
   
   # create DGE list
-  exp   <- c("E.coli", "E.coli", "B.subtillis", "B.subtillis")
+  exp   <- c("E.coli", "E.coli", "E.coli", "B.subtillis", "B.subtillis", "B.subtillis")
   group <- factor(exp)
-  y     <- DGEList(counts = countMatrix[,3:6], group = group)
+  y     <- DGEList(counts = countMatrix[,3:8], group = group)
   
   # select all genes with at least 50 counts per million (cpm) in two samples
   keep.genes <- rowSums(cpm(y) > 50) >= 2
@@ -41,7 +41,7 @@ differentially_expressed_genes <- function(){
   y <- estimateGLMTagwiseDisp(y, design)
   
   # plot normalized data
-  pdf("Normalization_Results.pdf")
+  pdf("Normalization_Results.pdf") 
   plotMDS(y)
   plotBCV(y)
   dev.off()
@@ -72,4 +72,3 @@ main <- function(){
 }
 
 main()
-
