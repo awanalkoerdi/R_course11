@@ -16,10 +16,12 @@ split2 <- do.call(rbind ,strsplit(as.character(split1[,2]),  ".", fixed = TRUE))
 count85 <- cbind(split2, count85)
 count85[,"V1"] <- NULL
 
-#creates count matrix 
-countMatrix <- cbind(cbind(count85, count86$V2, count87$V2),cbind(count94$V2, count95$V2, count96$V2))
-colnames(countMatrix) <- c("Chromosome", "Gene", "E.coli_85", "E.coli_86", "E.coli_87", "B.subtillis_94", "B.subtillis_95", "E.coli_96")
 
+#creates count matrix 
+#countMatrix <- cbind(cbind(count85, count86$V2, count87$V2),cbind(count94$V2, count95$V2, count96$V2))
+countMatrix <- do.call(cbind, list(count85, count86, count87), cbind(count94, count95, count96))
+
+colnames(countMatrix) <- c("Chromosome", "Gene", "E.coli_85", "E.coli_86", "E.coli_87", "B.subtillis_94", "B.subtillis_95", "B.subtillis_96")
 
 write.csv(countMatrix ,"countMatrix.csv", row.names = FALSE)
 
