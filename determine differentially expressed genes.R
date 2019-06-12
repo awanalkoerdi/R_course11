@@ -10,7 +10,7 @@ library(ggplot2)
 library(data.table)
 
 #Function to create countmatrix from seperate txt files
-createCountMatrix <- funtion(){
+createCountMatrix <- function(){
   
   #Open all count files
   count85 <- (read.csv("counts_SRR5832185.txt", header = FALSE, sep = "\t"))
@@ -33,7 +33,7 @@ createCountMatrix <- funtion(){
 
   #creates count matrix 
   #countMatrix <- cbind(cbind(count85, count86$V2, count87$V2),cbind(count94$V2, count95$V2, count96$V2))
-  countMatrix <- do.call(cbind, list(count85, count86, count87), cbind(count94, count95, count96))
+  countMatrix <- do.call(cbind, list(count85, count86, count87, count94, count95, count96))
 
   colnames(countMatrix) <- c("Chromosome", "Gene", "E.coli_85", "E.coli_86", "E.coli_87", "B.subtillis_94", "B.subtillis_95", "B.subtillis_96")
 
@@ -64,7 +64,7 @@ differentially_expressed_genes <- function(){
   # create design matrix (samples grouped by conditions)
   design <- model.matrix(~0+group, data = y$samples)
   colnames(design) <- levels(y$samples$group)
-  print(design)
+  #print(design)
   
   # estimate dispersion
   y <- estimateGLMCommonDisp( y, design)
@@ -97,8 +97,9 @@ differentially_expressed_genes <- function(){
 
 
 main <- function(){
-  differentially_expressed_genes()
   createCountMatrix()
+  differentially_expressed_genes()
+
 }
 
 main()
