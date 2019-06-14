@@ -36,10 +36,11 @@ create_countmatrix <- function(){
   colnames(countMatrix) <- c("Chromosome", "Gene", "E.coli_85", "E.coli_86", "E.coli_87", "B.subtillis_94", "B.subtillis_95", "B.subtillis_96")
 
   write.csv(countMatrix ,"countMatrix.csv", row.names = FALSE)
+  return(countMatrix)
 }
 
 
-differentially_expressed_genes <- function(res){
+differentially_expressed_genes <- function(countMatrix){
   # open file
   countMatrix <- read.csv("countMatrix.csv", header = TRUE)
   rownames(countMatrix) <- countMatrix[,"Gene"]
@@ -86,8 +87,7 @@ differentially_expressed_genes <- function(res){
 }
   
 #creates a text file out of a csv file. 
-create_gsea_input <- function(){ 
-  res <- differentially_expressed_genes(res)
+create_gsea_input <- function(res){ 
   subSet <<- as.data.frame(res[,4:5])
   setDT(subSet, keep.rownames = TRUE)[]
 
@@ -95,9 +95,9 @@ create_gsea_input <- function(){
 }
 
 main <- function(){
-  create_countmatrix()
-  differentially_expressed_genes(res)
-  create_gsea_input()
+  countMatrix <- create_countmatrix()
+  res <- differentially_expressed_genes(countMatrix)
+  create_gsea_input(res)
 }
 
 main()
