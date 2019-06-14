@@ -41,8 +41,7 @@ create_countmatrix <- function(){
 
 
 differentially_expressed_genes <- function(countMatrix){
-  # open file
-  countMatrix <- read.csv("countMatrix.csv", header = TRUE)
+  #change rownames to GeneID
   rownames(countMatrix) <- countMatrix[,"Gene"]
   
   # create DGE list
