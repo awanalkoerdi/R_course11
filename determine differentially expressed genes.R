@@ -56,8 +56,11 @@ differentially_expressed_genes <- function(countMatrix){
   
   # recalculate the library size
   y$samples$lib.size <- colSums(y$counts)
+  return(y)
+}
 
-  # normalization
+# normalization
+normalization <- function(y){
   y <- calcNormFactors(y, method = "TMM")
   
   # create design matrix (samples grouped by conditions)
@@ -68,15 +71,21 @@ differentially_expressed_genes <- function(countMatrix){
   y <- estimateGLMCommonDisp( y, design)
   y <- estimateGLMTrendedDisp(y, design, method = "power")
   y <- estimateGLMTagwiseDisp(y, design)
+  return(y, design)
+}
   
-  # plot normalized data
+# plot normalized data
+plot_data <- function(y, design){
   pdf("Normalization_Results.pdf") 
   plotMDS(y)
   plotBCV(y)
   dev.off()
+  return(y)
+}
   
-  # Determine differentially expressed genes
-  fit <- glmFit(y, design)
+# Determine differentially expressed genes
+determine_differentially_expressed_genes <- function(y){
+  fit <- glmFit(as.numeric(y, design))
   mc  <- makeContrasts(exp.r=E.coli-B.subtillis, levels = design)
   fit <- glmLRT(fit, contrast = mc)
   res <- topTags(fit, n = 100000, p.value = 0.05)
@@ -96,7 +105,10 @@ create_gsea_input <- function(res){
 
 main <- function(){
   countMatrix <- create_countmatrix()
-  res <- differentially_expressed_genes(countMatrix)
+  y <- differentially_expressed_genes(countMatrix)
+  y <- normalization(y)
+  y <- plot_data(y)
+  y <- determine_differentially_expressed_genes(y)
   create_gsea_input(res)
 }
 
