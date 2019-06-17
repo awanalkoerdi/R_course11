@@ -1,0 +1,367 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Effect of the diet type on the C. elegans transcriptome},
+            pdfauthor={Awan , Lotte, Nicky \& Melanie},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Effect of the diet type on the C. elegans transcriptome}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Awan , Lotte, Nicky \& Melanie}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{13 juni 2019}
+
+
+\begin{document}
+\maketitle
+
+\subsection{Introduction}\label{introduction}
+
+The standard protocol for Caenorhabditis elegans growth and maintenance
+is 20oC on an Escherichia coli diet.During this analysis we focused on
+the changes in gene expression when the diet is changed to B.subtillis.
+For each condition (diet type) we obtained three replicates.
+
+\subsection{Imports}\label{imports}
+
+Necessary libraries are loaded in first:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(openxlsx  , }\DataTypeTok{quietly =}\NormalTok{ T)}
+\KeywordTok{library}\NormalTok{(edgeR     , }\DataTypeTok{quietly =}\NormalTok{ T)}
+\KeywordTok{library}\NormalTok{(ggplot2   , }\DataTypeTok{quietly =}\NormalTok{ T)}
+\KeywordTok{library}\NormalTok{(data.table, }\DataTypeTok{quietly =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Create countmatrix}\label{create-countmatrix}
+
+Here we start with the count files for each sample. Each file contains
+the geneIDs and their corresponding total count. All samples and their
+count are put in one dataframe, counMatrix. Each column is named after
+diet type and the last two digits of the SRR code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Open all count files}
+\NormalTok{count85 <-}\StringTok{ }\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"counts_SRR5832185.txt"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{))}
+\NormalTok{count86 <-}\StringTok{ }\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"counts_SRR5832186.txt"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{))}
+\NormalTok{count87 <-}\StringTok{ }\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"counts_SRR5832187.txt"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{))}
+
+\NormalTok{count94 <-}\StringTok{ }\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"counts_SRR5832194.txt"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{))}
+\NormalTok{count95 <-}\StringTok{ }\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"counts_SRR5832195.txt"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{))}
+\NormalTok{count96 <-}\StringTok{ }\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"counts_SRR5832196.txt"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{))}
+
+
+\CommentTok{#split the chromosome and gene information}
+\NormalTok{split1 <-}\StringTok{ }\KeywordTok{do.call}\NormalTok{(rbind ,}\KeywordTok{strsplit}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(count85[,}\DecValTok{1}\NormalTok{]), }\StringTok{":"}\NormalTok{, }\DataTypeTok{fixed =} \OtherTok{TRUE}\NormalTok{))}
+\NormalTok{split2 <-}\StringTok{ }\KeywordTok{do.call}\NormalTok{(rbind ,}\KeywordTok{strsplit}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(split1[,}\DecValTok{2}\NormalTok{]) , }\StringTok{"."}\NormalTok{, }\DataTypeTok{fixed =} \OtherTok{TRUE}\NormalTok{))}
+
+\CommentTok{#Add chromosome and gene information  to count85 dataframe and removes old column}
+\NormalTok{count85 <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(split2, count85)}
+\NormalTok{count85[,}\StringTok{"V1"}\NormalTok{] <-}\StringTok{ }\OtherTok{NULL}
+
+
+\CommentTok{#creates count matrix }
+\NormalTok{countMatrix <<-}\StringTok{ }\KeywordTok{do.call}\NormalTok{(cbind, }\KeywordTok{list}\NormalTok{(count85, count86}\OperatorTok{$}\NormalTok{V2, count87}\OperatorTok{$}\NormalTok{V2, count94}\OperatorTok{$}\NormalTok{V2, count95}\OperatorTok{$}\NormalTok{V2, count96}\OperatorTok{$}\NormalTok{V2))}
+\KeywordTok{colnames}\NormalTok{(countMatrix) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Chromosome"}\NormalTok{, }\StringTok{"Gene"}\NormalTok{, }\StringTok{"E.coli_85"}\NormalTok{, }\StringTok{"E.coli_86"}\NormalTok{, }\StringTok{"E.coli_87"}\NormalTok{, }\StringTok{"B.subtillis_94"}\NormalTok{, }\StringTok{"B.subtillis_95"}\NormalTok{, }\StringTok{"B.subtillis_96"}\NormalTok{)}
+
+\CommentTok{#change rownames to GeneID}
+\KeywordTok{rownames}\NormalTok{(countMatrix) <-}\StringTok{ }\NormalTok{countMatrix[,}\StringTok{"Gene"}\NormalTok{]}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{head}\NormalTok{(countMatrix))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Chromosome  Gene E.coli_85 E.coli_86 E.coli_87 B.subtillis_94
+## g6684 chrIII_pilon g6684         0         0         0              0
+## g6685 chrIII_pilon g6685        10         6         6              7
+## g6686 chrIII_pilon g6686         0         0         0              2
+## g6687 chrIII_pilon g6687        26        14        14             20
+## g6688 chrIII_pilon g6688         7         7         7              2
+## g6689 chrIII_pilon g6689         1        24        24              0
+##       B.subtillis_95 B.subtillis_96
+## g6684              0              0
+## g6685              6              7
+## g6686              0              0
+## g6687             26             27
+## g6688              5             10
+## g6689             58              5
+\end{verbatim}
+
+\subsection{Low count filtering}\label{low-count-filtering}
+
+Genes with a low count are filtered out of the dataset (count
+\textless{} 50).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# create DGE list}
+\NormalTok{exp   <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"E.coli"}\NormalTok{, }\StringTok{"E.coli"}\NormalTok{, }\StringTok{"E.coli"}\NormalTok{, }\StringTok{"B.subtillis"}\NormalTok{, }\StringTok{"B.subtillis"}\NormalTok{, }\StringTok{"B.subtillis"}\NormalTok{)}
+\NormalTok{group <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(exp)}
+\NormalTok{y     <-}\StringTok{ }\KeywordTok{DGEList}\NormalTok{(}\DataTypeTok{counts =}\NormalTok{ countMatrix[,}\DecValTok{3}\OperatorTok{:}\DecValTok{8}\NormalTok{], }\DataTypeTok{group =}\NormalTok{ group)}
+  
+\CommentTok{# select all genes with at least 50 counts per million (cpm) in two samples}
+\NormalTok{keep.genes <-}\StringTok{ }\KeywordTok{rowSums}\NormalTok{(}\KeywordTok{cpm}\NormalTok{(y) }\OperatorTok{>}\StringTok{ }\DecValTok{50}\NormalTok{) }\OperatorTok{>=}\StringTok{ }\DecValTok{2}
+\NormalTok{y <-}\StringTok{ }\NormalTok{y[keep.genes,]}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Normalization}\label{normalization}
+
+Normalization of the data was done using the TMM method.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# recalculate the library size}
+\NormalTok{y}\OperatorTok{$}\NormalTok{samples}\OperatorTok{$}\NormalTok{lib.size <-}\StringTok{ }\KeywordTok{colSums}\NormalTok{(y}\OperatorTok{$}\NormalTok{counts)}
+
+\CommentTok{# normalization}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{calcNormFactors}\NormalTok{(y, }\DataTypeTok{method =} \StringTok{"TMM"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Create Design Matrix}\label{create-design-matrix}
+
+Design matrix is made to organize the samples and their corresponding
+conditions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# create design matrix (samples grouped by conditions)}
+\NormalTok{design <-}\StringTok{ }\KeywordTok{model.matrix}\NormalTok{(}\OperatorTok{~}\DecValTok{0}\OperatorTok{+}\NormalTok{group, }\DataTypeTok{data =}\NormalTok{ y}\OperatorTok{$}\NormalTok{samples)}
+\KeywordTok{colnames}\NormalTok{(design) <-}\StringTok{ }\KeywordTok{levels}\NormalTok{(y}\OperatorTok{$}\NormalTok{samples}\OperatorTok{$}\NormalTok{group)}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{head}\NormalTok{(design))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                B.subtillis E.coli
+## E.coli_85                0      1
+## E.coli_86                0      1
+## E.coli_87                0      1
+## B.subtillis_94           1      0
+## B.subtillis_95           1      0
+## B.subtillis_96           1      0
+\end{verbatim}
+
+\subsection{Estimate dispersion}\label{estimate-dispersion}
+
+The common,Trended and Tagwise dispersion are calculated
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# estimate dispersion}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{estimateGLMCommonDisp}\NormalTok{( y, design)}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{estimateGLMTrendedDisp}\NormalTok{(y, design, }\DataTypeTok{method =} \StringTok{"power"}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{estimateGLMTagwiseDisp}\NormalTok{(y, design)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Plot normalized data}\label{plot-normalized-data}
+
+First we plot the multidimensional scaling, which is a multivariate data
+analysis approach used for visualization of similarity and dissimilarity
+in a two dimensional plot. Second, we plot the BCV, which is the square
+root of the negative binomial dispersion.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{plotMDS}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{markdown_script_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{plotBCV}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{markdown_script_files/figure-latex/unnamed-chunk-7-2.pdf}
+
+\subsection{Determination of differentially expressed
+genes}\label{determination-of-differentially-expressed-genes}
+
+All significantly expressed genes (p-value \textless{} 0.05) are
+filtered out and written to diff\_expressed\_genes.csv and data frame
+res.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Determine differentially expressed genes}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{glmFit}\NormalTok{(y, design)}
+\NormalTok{mc  <-}\StringTok{ }\KeywordTok{makeContrasts}\NormalTok{(}\DataTypeTok{exp.r=}\NormalTok{E.coli}\OperatorTok{-}\NormalTok{B.subtillis, }\DataTypeTok{levels =}\NormalTok{ design)}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{glmLRT}\NormalTok{(fit, }\DataTypeTok{contrast =}\NormalTok{ mc)}
+\NormalTok{res <-}\StringTok{ }\KeywordTok{topTags}\NormalTok{(fit, }\DataTypeTok{n =} \DecValTok{100000}\NormalTok{, }\DataTypeTok{p.value =} \FloatTok{0.05}\NormalTok{)}
+\NormalTok{result_df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{topTags}\NormalTok{(fit, }\DataTypeTok{n =} \DecValTok{100000}\NormalTok{, }\DataTypeTok{p.value =} \FloatTok{0.05}\NormalTok{))}
+  
+\KeywordTok{write.csv}\NormalTok{(res ,}\StringTok{"diff_expressed_genes.csv"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{TRUE}\NormalTok{)}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{head}\NormalTok{(result_df))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            logFC   logCPM       LR        PValue           FDR
+## g12945 -5.954225 6.692446 883.6821 3.460733e-194 5.955922e-191
+## g13180  2.399371 6.208840 310.9556  1.352216e-69  1.163582e-66
+## g4550  -1.932292 6.472113 185.0521  3.823170e-42  2.193225e-39
+## g16086 -3.079451 6.216210 164.8901  9.667564e-38  4.159469e-35
+## g14478  2.380018 6.544507 156.2723  7.381659e-36  2.540767e-33
+## g6024  -1.533203 6.380272 140.7693  1.807107e-32  5.183384e-30
+\end{verbatim}
+
+\subsection{Create input for future GSEA
+analysis}\label{create-input-for-future-gsea-analysis}
+
+For a gene set enrichment analysis ad txt file with genes and their
+p-value and FDR are required.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  subSet <<-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(res[,}\DecValTok{4}\OperatorTok{:}\DecValTok{5}\NormalTok{])}
+  \KeywordTok{setDT}\NormalTok{(subSet, }\DataTypeTok{keep.rownames =} \OtherTok{TRUE}\NormalTok{)[]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          rn        PValue           FDR
+##   1: g12945 3.460733e-194 5.955922e-191
+##   2: g13180  1.352216e-69  1.163582e-66
+##   3:  g4550  3.823170e-42  2.193225e-39
+##   4: g16086  9.667564e-38  4.159469e-35
+##   5: g14478  7.381659e-36  2.540767e-33
+##  ---                                   
+## 201:  g7925  5.582898e-03  4.780183e-02
+## 202: g12821  5.624227e-03  4.791730e-02
+## 203: g20364  5.707645e-03  4.838846e-02
+## 204:  g1716  5.787202e-03  4.882242e-02
+## 205:  g5218  5.897771e-03  4.951251e-02
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{write.table}\NormalTok{(subSet, }\StringTok{"gsea_input.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}
