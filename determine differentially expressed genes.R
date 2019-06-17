@@ -59,7 +59,7 @@ differentially_expressed_genes <- function(countMatrix){
 }
 
 # normalization
-normalization <- function(y){
+normalization <- function(y){ 
   y <- calcNormFactors(y, method = "TMM")
   
   # create design matrix (samples grouped by conditions)
@@ -112,3 +112,5 @@ main <- function(){
 }
 
 main()
+
+##
