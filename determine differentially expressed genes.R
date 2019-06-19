@@ -70,20 +70,16 @@ normalization <- function(y){
   y <- estimateGLMCommonDisp( y, design)
   y <- estimateGLMTrendedDisp(y, design, method = "power")
   y <- estimateGLMTagwiseDisp(y, design)
-  return(y, design)
-}
   
-# plot normalized data
-plot_data <- function(y, design){
+  
+  # plot normalized data
   pdf("Normalization_Results.pdf") 
   plotMDS(y)
   plotBCV(y)
   dev.off()
   return(y)
-}
   
-# Determine differentially expressed genes
-determine_differentially_expressed_genes <- function(y){
+  # Determine differentially expressed genes
   fit <- glmFit(as.numeric(y, design))
   mc  <- makeContrasts(exp.r=E.coli-B.subtillis, levels = design)
   fit <- glmLRT(fit, contrast = mc)
@@ -106,11 +102,7 @@ main <- function(){
   countMatrix <- create_countmatrix()
   y <- differentially_expressed_genes(countMatrix)
   y <- normalization(y)
-  y <- plot_data(y)
-  y <- determine_differentially_expressed_genes(y)
   create_gsea_input(res)
 }
 
 main()
-
-##
