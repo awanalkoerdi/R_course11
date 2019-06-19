@@ -8,6 +8,8 @@ library(openxlsx)
 library(edgeR)
 library(ggplot2)
 library(data.table)
+library(grid)
+library(gridExtra)
 
 #Function to create countmatrix from seperate text files.
 create_countmatrix <- function(){
@@ -70,25 +72,44 @@ dispersion <- function(y){
   # estimate dispersion
   y <- estimateGLMCommonDisp( y, design)
   y <- estimateGLMTrendedDisp(y, design, method = "power")
-  y <<- estimateGLMTagwiseDisp(y, design)
+  y <- estimateGLMTagwiseDisp(y, design)
+  
+  #create PCA plot
+  df <- as.data.frame(y$counts)
+  df_pca <- prcomp(df)
+  
+  #create new dataframe to revise pca plot
+  df_out <- as.data.frame(df_pca$x)
+  exp    <- c("E.coli", "E.coli", "E.coli", "B.subtillis", "B.subtillis", "B.subtillis")
+  df_out$exp <- sapply( strsplit(row.names(df), "_"), "[[", 1 )
+  
+  p <- ggplot(df_out,aes(x=PC1,y=PC2,color=exp ))
+  p <- p+geom_point()
+
   
   # plot normalized data
   pdf("Normalization_Results.pdf") 
   plotMDS(y)
   plotBCV(y)
+  plot(df_pca$x[,1], df_pca$x[,2])
+  p
+
   dev.off()
+  
   return(design)
 }
 
+# Determine differentially expressed genes
 determine_sig_genes <- function(design){
-  # Determine differentially expressed genes
   fit <- glmFit(y, design)
   mc  <- makeContrasts(exp.r=E.coli-B.subtillis, levels = design)
   fit <- glmLRT(fit, contrast = mc)
   res <- topTags(fit, n = 100000, p.value = 0.05)
   result_df <- as.data.frame(topTags(fit, n = 100000, p.value = 0.05))
   
+  #write csv file 
   write.csv(res ,"diff_expressed_genes.csv", row.names = TRUE)
+
   return(res)
 }
 
@@ -99,6 +120,7 @@ create_gsea_input <- function(res){
   
   write.table(subSet, "gsea_input.txt", sep = "\t", row.names = FALSE)
 }
+
 
 main <- function(){
   countMatrix <- create_countmatrix()
