@@ -85,14 +85,12 @@ dispersion <- function(y){
   
   p <- ggplot(df_out,aes(x=PC1,y=PC2,color=exp ))
   p <- p+geom_point()
-
   
   # plot normalized data
   pdf("Normalization_Results.pdf") 
   plotMDS(y)
   plotBCV(y)
   plot(df_pca$x[,1], df_pca$x[,2])
-  p
 
   dev.off()
   
