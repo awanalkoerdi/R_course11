@@ -81,16 +81,17 @@ dispersion <- function(y){
   #create new dataframe to revise pca plot
   df_out <- as.data.frame(df_pca$x)
   exp    <- c("E.coli", "E.coli", "E.coli", "B.subtillis", "B.subtillis", "B.subtillis")
-  df_out$exp <- sapply( strsplit(row.names(df), "_"), "[[", 1 )
+  df_out$exp <- sapply(strsplit(row.names(df), "_"), "[[", 1 )
   
-  p <- ggplot(df_out,aes(x=PC1,y=PC2,color=exp ))
+  p <- ggplot(df_out,aes(x=PC1,y=PC2, color=exp ))
   p <- p+geom_point()
   
   # plot normalized data
   pdf("Normalization_Results.pdf") 
   plotMDS(y)
   plotBCV(y)
-  plot(df_pca$x[,1], df_pca$x[,2])
+  plot(df_pca$x[,1], df_pca$x[,2], main="PCA plot",
+       xlab="PCA1",ylab="PCA2")
 
   dev.off()
   
