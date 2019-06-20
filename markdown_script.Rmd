@@ -3,8 +3,8 @@ title: "Effect of the diet type on the C. elegans transcriptome"
 author: "Awan , Lotte, Nicky & Melanie"
 date: "13 juni 2019"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -13,8 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-The standard protocol for Caenorhabditis elegans growth and maintenance is 20oC on an Escherichia coli diet.During this analysis we focused on the changes in gene expression when the diet is changed to B.subtillis. 
-For each condition (diet type) we obtained three replicates. 
+The standard protocol for Caenorhabditis elegans growth and maintenance is 20 degrees Celsius on an Escherichia coli diet.During this analysis we focused on the changes in gene expression when the diet is changed to B.subtillis. 
+For each condition (diet type) we obtained three replicates. With this script we determined the 10 most significantly expressed genes.
 
 
 ## Imports
@@ -127,10 +127,30 @@ y <- estimateGLMTagwiseDisp(y, design)
 First we plot the multidimensional scaling, which is a multivariate data analysis approach used for visualization of similarity and dissimilarity in a two dimensional plot. Second, we plot the BCV, which is the square root of the negative binomial dispersion. 
 
 ```{r}
-  plotMDS(y)
-  plotBCV(y)
+# Plot MDS/PCA plot
+plotMDS(y)
+
+# Plot BCV plot
+plotBCV(y)
 ```
 
+## Create Dendogram
+
+To check if the samples are clustered in the right groups a hierarchical clustering is performed. Distance matrix is made with euclidean distances and clustering is done with ward.D2 method. 
+
+```{r}
+# Create distance matrix of normalized count data
+norm_counts <- as.data.frame(as.matrix.DGEList(y))
+norm_counts <- na.omit(t(norm_counts))
+norm_counts <- scale(norm_counts)
+dist_mat <- dist(norm_counts, method = "euclidean")
+
+# cluster data based on samples 
+clustering <- hclust(dist_mat, method = "ward.D2")
+
+# Plot hierarchical clustering
+plot(clustering, ylab = "Distance", main = "Hierarchical Clustering of Samples")
+```
 
 ## Determination of differentially expressed genes
 
@@ -154,10 +174,10 @@ print(head(result_df))
 For a gene set enrichment analysis ad txt file with genes and their p-value and FDR are required. 
 
 ```{r}
-  subSet <<- as.data.frame(res[,4:5])
-  setDT(subSet, keep.rownames = TRUE)[]
+subSet <- as.data.frame(res[,4:5])
+setDT(subSet, keep.rownames = TRUE)[]
 
-  write.table(subSet, "gsea_input.txt", sep = "\t", row.names = FALSE)
+write.table(subSet, "gsea_input.txt", sep = "\t", row.names = FALSE)
 ```
 
 

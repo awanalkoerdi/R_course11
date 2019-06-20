@@ -283,7 +283,8 @@ root of the negative binomial dispersion.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-  \KeywordTok{plotMDS}\NormalTok{(y)}
+\CommentTok{# Plot MDS/PCA plot}
+\KeywordTok{plotMDS}\NormalTok{(y)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -291,11 +292,36 @@ root of the negative binomial dispersion.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-  \KeywordTok{plotBCV}\NormalTok{(y)}
+\CommentTok{# Plot BCV plot}
+\KeywordTok{plotBCV}\NormalTok{(y)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{markdown_script_files/figure-latex/unnamed-chunk-7-2.pdf}
+
+\subsection{Create Dendogram}\label{create-dendogram}
+
+To check if the samples are clustered in the right groups a hierarchical
+clustering is performed. Distance matrix is made with euclidean
+distances and clustering is done with ward.D2 method.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create distance matrix of normalized count data}
+\NormalTok{norm_counts <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{as.matrix.DGEList}\NormalTok{(y))}
+\NormalTok{norm_counts <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(}\KeywordTok{t}\NormalTok{(norm_counts))}
+\NormalTok{norm_counts <-}\StringTok{ }\KeywordTok{scale}\NormalTok{(norm_counts)}
+\NormalTok{dist_mat <-}\StringTok{ }\KeywordTok{dist}\NormalTok{(norm_counts, }\DataTypeTok{method =} \StringTok{"euclidean"}\NormalTok{)}
+
+\CommentTok{# cluster data based on samples }
+\NormalTok{clustering <-}\StringTok{ }\KeywordTok{hclust}\NormalTok{(dist_mat, }\DataTypeTok{method =} \StringTok{"ward.D2"}\NormalTok{)}
+
+\CommentTok{# Plot hierarchical clustering}
+\KeywordTok{plot}\NormalTok{(clustering, }\DataTypeTok{ylab =} \StringTok{"Distance"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"Hierarchical Clustering of Samples"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{markdown_script_files/figure-latex/unnamed-chunk-8-1.pdf}
 
 \subsection{Determination of differentially expressed
 genes}\label{determination-of-differentially-expressed-genes}
@@ -310,7 +336,7 @@ res.
 \NormalTok{fit <-}\StringTok{ }\KeywordTok{glmFit}\NormalTok{(y, design)}
 \NormalTok{mc  <-}\StringTok{ }\KeywordTok{makeContrasts}\NormalTok{(}\DataTypeTok{exp.r=}\NormalTok{E.coli}\OperatorTok{-}\NormalTok{B.subtillis, }\DataTypeTok{levels =}\NormalTok{ design)}
 \NormalTok{fit <-}\StringTok{ }\KeywordTok{glmLRT}\NormalTok{(fit, }\DataTypeTok{contrast =}\NormalTok{ mc)}
-\NormalTok{res <-}\StringTok{ }\KeywordTok{topTags}\NormalTok{(fit, }\DataTypeTok{n =} \DecValTok{100000}\NormalTok{, }\DataTypeTok{p.value =} \FloatTok{0.05}\NormalTok{)}
+\NormalTok{res <<-}\StringTok{ }\KeywordTok{topTags}\NormalTok{(fit, }\DataTypeTok{n =} \DecValTok{100000}\NormalTok{, }\DataTypeTok{p.value =} \FloatTok{0.05}\NormalTok{)}
 \NormalTok{result_df <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{topTags}\NormalTok{(fit, }\DataTypeTok{n =} \DecValTok{100000}\NormalTok{, }\DataTypeTok{p.value =} \FloatTok{0.05}\NormalTok{))}
   
 \KeywordTok{write.csv}\NormalTok{(res ,}\StringTok{"diff_expressed_genes.csv"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{TRUE}\NormalTok{)}
@@ -337,8 +363,8 @@ p-value and FDR are required.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{  subSet <<-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(res[,}\DecValTok{4}\OperatorTok{:}\DecValTok{5}\NormalTok{])}
-  \KeywordTok{setDT}\NormalTok{(subSet, }\DataTypeTok{keep.rownames =} \OtherTok{TRUE}\NormalTok{)[]}
+\NormalTok{subSet <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(res[,}\DecValTok{4}\OperatorTok{:}\DecValTok{5}\NormalTok{])}
+\KeywordTok{setDT}\NormalTok{(subSet, }\DataTypeTok{keep.rownames =} \OtherTok{TRUE}\NormalTok{)[]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -359,7 +385,7 @@ p-value and FDR are required.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-  \KeywordTok{write.table}\NormalTok{(subSet, }\StringTok{"gsea_input.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{write.table}\NormalTok{(subSet, }\StringTok{"gsea_input.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 

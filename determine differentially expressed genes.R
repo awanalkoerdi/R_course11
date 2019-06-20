@@ -32,17 +32,15 @@ create_countmatrix <- function(){
   count85 <- cbind(split2, count85)
   count85[,"V1"] <- NULL
   
-  
   #creates count matrix 
   countMatrix <- do.call(cbind, list(count85, count86$V2, count87$V2, count94$V2, count95$V2, count96$V2))
   colnames(countMatrix) <- c("Chromosome", "Gene", "E.coli_85", "E.coli_86", "E.coli_87", "B.subtillis_94", "B.subtillis_95", "B.subtillis_96")
-  
-  write.csv(countMatrix ,"countMatrix.csv", row.names = FALSE)
 
   return(countMatrix)
 }
 
 
+# Performs low count filtering and normalization of data
 filter_and_normalize <- function(countMatrix){
   # Create rownames
   rownames(countMatrix) <- countMatrix[,"Gene"]
@@ -65,7 +63,8 @@ filter_and_normalize <- function(countMatrix){
 }
 
 
-dispersion <- function(y){
+# Creates a PCA/MDS, BCV and hierarchical clustering plots and writes it to Output_Plots.pdf
+create_plots <- function(y){
   # create design matrix (samples grouped by conditions)
   design <- model.matrix(~0+group, data = y$samples)
   colnames(design) <- levels(y$samples$group)
@@ -73,25 +72,22 @@ dispersion <- function(y){
   # estimate dispersion
   y <- estimateGLMCommonDisp( y, design)
   y <- estimateGLMTrendedDisp(y, design, method = "power")
-  y <- estimateGLMTagwiseDisp(y, design)
+  y <<- estimateGLMTagwiseDisp(y, design)
   
-  #create PCA plot
-  df <- as.data.frame(y$counts)
-  df_pca <- prcomp(df)
+  # Create distance matrix of normalized count data
+  norm_counts <- as.data.frame(as.matrix.DGEList(y))
+  norm_counts <- na.omit(t(norm_counts))
+  norm_counts <- scale(norm_counts)
+  dist_mat <- dist(norm_counts, method = "euclidean")
   
-  #craete dendrogram
-  #Compute distances and hierarchical clustering
-  dd <- dist(scale(y$samples), method = "euclidean")
-  hc <- hclust(dd, method = "ward.D2")
-
+  # cluster data based on samples 
+  clustering <- hclust(dist_mat, method = "ward.D2")
   
-  # plot normalized data
-  pdf("Normalization_Results.pdf") 
-  plotMDS(y)
+  # plot PCA/MDS, BCV and the hierarchical clustering to Results.pdf
+  pdf("Results.pdf") 
+  plotMDS(y, xlab = "PC1", ylab = "PC2")
   plotBCV(y)
-  plot(df_pca$x[,1], df_pca$x[,2], main="PCA plot",
-       xlab="PCA1",ylab="PCA2")
-  plot(hc, hang = -1, cex = 0.6)
+  plot(clustering, ylab = "Distance", main = "Hierarchical Clustering of Samples")
   dev.off()
   
   return(design)
@@ -123,7 +119,7 @@ create_gsea_input <- function(res){
 main <- function(){
   countMatrix <- create_countmatrix()
   y <- filter_and_normalize(countMatrix)
-  design <- dispersion(y)
+  design <- create_plots(y)
   res <- determine_sig_genes(design)
   create_gsea_input(res)
 }
