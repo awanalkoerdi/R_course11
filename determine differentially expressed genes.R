@@ -38,6 +38,7 @@ create_countmatrix <- function(){
   colnames(countMatrix) <- c("Chromosome", "Gene", "E.coli_85", "E.coli_86", "E.coli_87", "B.subtillis_94", "B.subtillis_95", "B.subtillis_96")
   
   write.csv(countMatrix ,"countMatrix.csv", row.names = FALSE)
+
   return(countMatrix)
 }
 
@@ -78,13 +79,11 @@ dispersion <- function(y){
   df <- as.data.frame(y$counts)
   df_pca <- prcomp(df)
   
-  #create new dataframe to revise pca plot
-  #df_out <- as.data.frame(df_pca$x)
-  #exp    <- c("E.coli", "E.coli", "E.coli", "B.subtillis", "B.subtillis", "B.subtillis")
-  #df_out$exp <- sapply(strsplit(row.names(df), "_"), "[[", 1 )
-  
-  #p <- ggplot(df_out,aes(x=PC1,y=PC2, color=exp ))
-  #p <- p+geom_point()
+  #craete dendrogram
+  #Compute distances and hierarchical clustering
+  dd <- dist(scale(y$samples), method = "euclidean")
+  hc <- hclust(dd, method = "ward.D2")
+
   
   # plot normalized data
   pdf("Normalization_Results.pdf") 
@@ -92,7 +91,7 @@ dispersion <- function(y){
   plotBCV(y)
   plot(df_pca$x[,1], df_pca$x[,2], main="PCA plot",
        xlab="PCA1",ylab="PCA2")
-
+  plot(hc, hang = -1, cex = 0.6)
   dev.off()
   
   return(design)
