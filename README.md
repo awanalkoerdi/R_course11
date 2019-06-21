@@ -2,12 +2,12 @@
 
 Het standaard protocol voor C. elegans is een voedingsbodem van E.coli. Tijdens dit project is onderzocht welke gen expressie veranderingen er te weeg worden gebracht als de voedingsbodem wordt veranderd naar B. subtillis.
 
-# Data
+### Data
 De fastq bestanden zijn verkregen uit de NCBI database. De bestanden zijn aan de hand van een FastQC analyse getrimd en gefilterd op Q score.
 
-# Mappen
+### Mappen
 Met als input de getrimde fastq bestanden is er gemapt met behulp van Bowtie2. Als eerst is er een reference gebouwd. 
-Het referentie gen is van de directory NAS gehaald.
+Het referentie genoom is van de directory NAS gehaald.
 
 ```
 bowtie2-build c_elegans.PRJEB28388.WS271.genomic.fa reference_genome
@@ -32,11 +32,12 @@ Deze gesorteerde bestanden worden gebruikt voor het maken van de countbestanden 
 htseq-count -r name ./SRR5832185_result-sorted.sam ./c_elegans.PRJEB28388.WS271.annotations.gtf  > counts_SRR5832185.txt
 ```
 
+### RNA-seq analyse
 Met behulp van R zijn de significante genen bepaald. 
 
-Het script vormt de losse count matrices om tot een volledige countmatrix met alle 6 samples en hun genen. Hierna is een low count filtering uitgevoerd waarbij alle genen met een count totaal lager dan 50 worden verwijderd uit de dataset. Normalisatie is uitgevoerd met behulp van de TMM methode, welke speciaal is ontwikkeld voor RNA-seq data. Dispersie is berekend en geplot in een MDS en BCV plot. Tevens is er een hierarchische clustering uitgevoerd om de afstanden tussen samples weer te geven. De plots zijn weggeschreven naar het PDF bestand Results.pdf. Hierin zijn alle plots te vinden.
+Het script vormt de losse count matrices om tot een volledige countmatrix met alle 6 samples en hun genen. Hierna is een low count filtering uitgevoerd waarbij alle genen met een count totaal lager dan 50 worden verwijderd uit de dataset. Normalisatie is uitgevoerd met behulp van de TMM methode, welke speciaal is ontwikkeld voor RNA-seq data. Dispersie is berekend en geplot in een MDS en BCV plot. Tevens is er een hierarchische clustering uitgevoerd om de afstanden tussen samples weer te geven.
 
 Genen met een p-value lager dan 0.05 zijn tijdens dit project beschouwt als significant. Dit houd in dat het expressie niveau significant is veranderd tussen de condities. 
-
+ 
 Genen samen met hun p-value en false discovery rate zijn weggeschreven naar een .txt bestand voor een latere GSEA analyse. 
 
