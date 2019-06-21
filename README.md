@@ -41,3 +41,7 @@ Genen met een p-value lager dan 0.05 zijn tijdens dit project beschouwt als sign
  
 Genen samen met hun p-value en false discovery rate zijn weggeschreven naar een .txt bestand voor een latere GSEA analyse. 
 
+
+## Bestanden
+
+Naast het R script met functies is er ook een R Markdown script gemaakt waarin de code wordt weergeven met bijbehorende output en data weergave. 
