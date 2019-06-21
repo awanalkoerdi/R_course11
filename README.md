@@ -32,7 +32,8 @@ htseq-count -r name ./SRR5832185_result-sorted.sam ./c_elegans.PRJEB28388.WS271.
 
 Met behulp van R zijn de significante genen bepaald. 
 
-Het script vormt de losse count matrices om tot een volledige countmatrix met alle 6 samples en hun genen. Hierna is een low count filtering uitgevoerd waarbij alle genen met een count totaal lager dan 50 worden verwijderd uit de dataset. Normalisatie is uitgevoerd met behulp van de TMM methode, welke speciaal is ontwikkeld voor RNA-seq data. Dispersie is berekend en geplot in een MDS en BCV plot. Tevens is er een hierarchische clustering uitgevoerd om de afstanden tussen samples weer te geven. 
+Het script vormt de losse count matrices om tot een volledige countmatrix met alle 6 samples en hun genen. Hierna is een low count filtering uitgevoerd waarbij alle genen met een count totaal lager dan 50 worden verwijderd uit de dataset. Normalisatie is uitgevoerd met behulp van de TMM methode, welke speciaal is ontwikkeld voor RNA-seq data. Dispersie is berekend en geplot in een MDS en BCV plot. Tevens is er een hierarchische clustering uitgevoerd om de afstanden tussen samples weer te geven. De plots zijn weggeschreven naar het PDF bestand Results.pdf. Hierin zijn alle plots te vinden.
+
 Genen met een p-value lager dan 0.05 zijn tijdens dit project beschouwt als significant. Dit houd in dat het expressie niveau significant is veranderd tussen de condities. 
 
 Genen samen met hun p-value en false discovery rate zijn weggeschreven naar een .txt bestand voor een latere GSEA analyse. 
