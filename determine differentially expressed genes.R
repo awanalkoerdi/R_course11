@@ -86,8 +86,9 @@ create_plots <- function(y){
   
   # plot PCA/MDS, BCV and the hierarchical clustering to Results.pdf
   pdf("Results.pdf") 
-  plotMDS(y, xlab = "PC1", ylab = "PC2")
+  
   plotBCV(y)
+  plotMDS(y, xlab = "PC1", ylab = "PC2")
   plot(clustering, ylab = "Distance", main = "Hierarchical Clustering of Samples")
 
   dev.off()
