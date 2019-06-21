@@ -81,7 +81,7 @@ dispersion <- function(y){
   
   #craete dendrogram
   #Compute distances and hierarchical clustering
-  dd <- dist(scale(y$samples), method = "euclidean")
+  dd <- dist(scale(df), method = "euclidean")
   hc <- hclust(dd, method = "ward.D2")
 
   
@@ -91,7 +91,7 @@ dispersion <- function(y){
   plotBCV(y)
   plot(df_pca$x[,1], df_pca$x[,2], main="PCA plot",
        xlab="PCA1",ylab="PCA2")
-  plot(hc, hang = -1, cex = 0.6)
+  plot(hc, hang = -1, cex = 0.6, main="Cluster")
   dev.off()
   
   return(design)
