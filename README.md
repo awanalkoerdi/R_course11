@@ -2,8 +2,10 @@
 
 Het standaard protocol voor C. elegans is een voedingsbodem van E.coli. Tijdens dit project is onderzocht welke gen expressie veranderingen er te weeg worden gebracht als de voedingsbodem wordt veranderd naar B. subtillis.
 
+# Data
 De fastq bestanden zijn verkregen uit de NCBI database. De bestanden zijn aan de hand van een FastQC analyse getrimd en gefilterd op Q score.
 
+# Mappen
 Met als input de getrimde fastq bestanden is er gemapt met behulp van Bowtie2. Als eerst is er een reference gebouwd. 
 Het referentie gen is van de directory NAS gehaald.
 
