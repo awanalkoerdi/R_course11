@@ -80,28 +80,16 @@ create_plots <- function(y){
   norm_counts <- scale(norm_counts)
   dist_mat <- dist(norm_counts, method = "euclidean")
   
-<<<<<<< HEAD
-  #craete dendrogram
-  #Compute distances and hierarchical clustering
-  dd <- dist(scale(df), method = "euclidean")
-  hc <- hclust(dd, method = "ward.D2")
 
-=======
   # cluster data based on samples 
   clustering <- hclust(dist_mat, method = "ward.D2")
->>>>>>> ca60c4eb6834019d2de93da77ca5db84c4990a5a
   
   # plot PCA/MDS, BCV and the hierarchical clustering to Results.pdf
   pdf("Results.pdf") 
   plotMDS(y, xlab = "PC1", ylab = "PC2")
   plotBCV(y)
-<<<<<<< HEAD
-  plot(df_pca$x[,1], df_pca$x[,2], main="PCA plot",
-       xlab="PCA1",ylab="PCA2")
-  plot(hc, hang = -1, cex = 0.6, main="Cluster")
-=======
   plot(clustering, ylab = "Distance", main = "Hierarchical Clustering of Samples")
->>>>>>> ca60c4eb6834019d2de93da77ca5db84c4990a5a
+
   dev.off()
   
   return(design)
